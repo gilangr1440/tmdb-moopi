@@ -4,6 +4,7 @@ export default {
   theme: {
     fontFamily: {
       main: ["Roboto"],
+      logo: ["Rubik"],
     },
     extend: {},
   },

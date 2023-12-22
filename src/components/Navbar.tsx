@@ -5,22 +5,34 @@ export class Navbar extends Component {
     return (
       <div>
         <div className="flex justify-around items-center h-16 w-full font-main text-white bg-slate-500">
-          <h1 className="text-2xl font-bold">
+          <h1 className="text-2xl font-bold font-logo">
             <i className="bx bxs-camera-movie"></i> MOOPI
           </h1>
           <div>
             <ul className="flex gap-12">
-              <li>Home</li>
-              <li>Favorite</li>
-              <li>Popular</li>
+              <li>
+                <a href="#" className="hover:text-yellow-300">
+                  Home
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-yellow-300">
+                  Favorite
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-yellow-300">
+                  Popular
+                </a>
+              </li>
               <li className="border-l border-solid border-l-slate-300"></li>
               <li>
-                <i className="bx bx-search"></i>
+                <i className="bx bx-search hover:text-yellow-300"></i>
               </li>
             </ul>
           </div>
           <div className="flex gap-6 items-center">
-            <i className="bx bxs-bell"></i>
+            <i className="bx bxs-bell hover:text-yellow-300"></i>
             <img src="src/assets/avatar.jpg" className="rounded-full" width={40} alt="profile" />
           </div>
         </div>
