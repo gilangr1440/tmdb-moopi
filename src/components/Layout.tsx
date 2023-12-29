@@ -4,16 +4,17 @@ import Footer from "./Footer";
 
 interface LayoutProps {
   children?: React.ReactNode;
+  showSearch: () => void;
 }
 
 export class Layout extends Component<LayoutProps> {
   render() {
-    const { children } = this.props;
+    const { children, showSearch } = this.props;
 
     return (
       <>
         <header>
-          <Navbar />
+          <Navbar search={showSearch} />
         </header>
         {children}
         <footer>

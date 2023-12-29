@@ -69,7 +69,7 @@ class Swipper extends Component<SwipperState> {
                   <button onClick={() => this.handlePopup(item.id)} className="absolute z-10 text-4xl p-3 bg-slate-500 bg-opacity-30 text-white">
                     {item.title}
                   </button>
-                  <img src={`https://image.tmdb.org/t/p/original/${item.poster_path}`} />
+                  <img src={`https://image.tmdb.org/t/p/original/${item.backdrop_path}`} />
                 </SwiperSlide>
               );
             })}
