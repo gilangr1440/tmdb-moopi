@@ -1,6 +1,7 @@
 import axios from "axios";
 import { Component } from "react";
 import Trailer from "./Trailer";
+import { Link } from "react-router-dom";
 
 interface ModalProps {
   showModal: () => void;
@@ -41,7 +42,7 @@ export class Modal extends Component<ModalProps> {
   }
 
   render() {
-    const { showModal, image, title, release, desc } = this.props;
+    const { showModal, image, title, release, desc, id_props } = this.props;
     const { trailerDatas } = this.state;
 
     return (
@@ -53,7 +54,13 @@ export class Modal extends Component<ModalProps> {
               <ul>
                 <li className="mb-2">Title: {title}</li>
                 <li className="mb-2">Release Date: {release}</li>
-                <li className="mb-2">Description: {desc}</li>
+                <li className="mb-2">
+                  Description: {desc}
+                  {"\n"}
+                  <Link to="/detail" state={{ id: `${id_props}` }} className="hover:text-yellow-300">
+                    More...
+                  </Link>
+                </li>
               </ul>
               {trailerDatas &&
                 trailerDatas.map((item: any, index: number) => {

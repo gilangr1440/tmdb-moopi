@@ -1,12 +1,14 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 interface NavbarProps {
   search: () => void;
+  icon: boolean;
 }
 
 export class Navbar extends Component<NavbarProps> {
   render() {
-    const { search } = this.props;
+    const { search, icon } = this.props;
     return (
       <div>
         <div className="flex justify-around items-center h-16 w-full font-main text-white bg-slate-500">
@@ -16,25 +18,23 @@ export class Navbar extends Component<NavbarProps> {
           <div>
             <ul className="flex gap-12">
               <li>
-                <a href="#" className="hover:text-yellow-300">
+                <Link to="/" className="hover:text-yellow-300">
                   Home
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-yellow-300">
+                <Link to="/favorite" className="hover:text-yellow-300">
                   Favorite
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-yellow-300">
+                <Link to="/popular" className="hover:text-yellow-300">
                   Popular
-                </a>
+                </Link>
               </li>
               <li className="border-l border-solid border-l-slate-300"></li>
               <li>
-                <button onClick={search}>
-                  <i className="bx bx-search hover:text-yellow-300"></i>
-                </button>
+                <button onClick={search}>{icon ? <i className="bx bx-x hover:text-yellow-300"></i> : <i className="bx bx-search hover:text-yellow-300"></i>}</button>
               </li>
             </ul>
           </div>
