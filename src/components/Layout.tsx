@@ -1,29 +1,22 @@
-import React, { Component } from "react";
+// import React, { Component } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 
-interface LayoutProps {
-  children?: React.ReactNode;
-  showSearch: () => void;
-  searchIcon: boolean;
-}
+import React, { FC } from "react";
+import { LayoutProps } from "../utils/component";
 
-export class Layout extends Component<LayoutProps> {
-  render() {
-    const { children, showSearch, searchIcon } = this.props;
-
-    return (
-      <>
-        <header>
-          <Navbar search={showSearch} icon={searchIcon} />
-        </header>
-        {children}
-        <footer>
-          <Footer />
-        </footer>
-      </>
-    );
-  }
-}
+const Layout: FC<LayoutProps> = ({ children, showSearch, searchIcon }) => {
+  return (
+    <>
+      <header>
+        <Navbar search={showSearch} icon={searchIcon} />
+      </header>
+      {children}
+      <footer>
+        <Footer />
+      </footer>
+    </>
+  );
+};
 
 export default Layout;
