@@ -5,6 +5,7 @@ import Home from "./pages/home";
 import Favorite from "./pages/favorite";
 import Detail from "./pages/detail";
 import Search from "./pages/search";
+import Popular from "./pages/popular";
 
 const App = () => {
   axios.defaults.baseURL = "https://api.themoviedb.org/3/";
@@ -16,6 +17,7 @@ const App = () => {
         <Route element={<Favorite />} path="/favorite" />
         <Route element={<Detail />} path="/detail" />
         <Route element={<Search />} path="/search" />
+        <Route element={<Popular />} path="/popular" />
       </Routes>
     </BrowserRouter>
   );

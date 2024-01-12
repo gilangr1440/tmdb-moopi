@@ -12,8 +12,11 @@ import Swal from "sweetalert2";
 import GenreButton from "../../components/GenreButton";
 import { withRouter } from "../../withRouter";
 import { HomeProps, Movie } from "../../utils/pages";
+import { useModeContext } from "../../context/modeContext";
+import { TabTitle } from "../../utils/functiontitle";
 
 const Home: FC<HomeProps> = ({ navigate }) => {
+  const { toggle } = useModeContext();
   const [visibility, setVisibility] = useState<boolean>(false);
   const [showSearch, setShowSearch] = useState<boolean>(false);
   const [idMovie, setIdMovie] = useState<number>(0);
@@ -197,8 +200,10 @@ const Home: FC<HomeProps> = ({ navigate }) => {
     setGenrePage(genrePage - 1);
   }
 
+  TabTitle("Moopi | Home");
+
   return (
-    <div>
+    <div className={`${toggle ? "bg-slate-700" : "bg-white"}`}>
       <Layout showSearch={() => showSearchHandle()} searchIcon={showSearch}>
         {showSearch ? (
           <form onSubmit={searchMovies} className="w-full absolute z-10 gap-5 flex justify-center items-center bg-white h-10">
@@ -214,14 +219,14 @@ const Home: FC<HomeProps> = ({ navigate }) => {
         </div>
 
         <div className="my-14">
-          <h1 className="text-3xl font-bold text-center mb-6">Now Playing Movies</h1>
+          <h1 className={`text-3xl font-bold text-center mb-6 ${toggle ? "text-slate-100" : "text-slate-900"}`}>Now Playing Movies</h1>
 
           <div className="w-3/4 mx-auto grid grid-cols-5 gap-4">
             {isLoading && <CardSkeleton cards={datasSum} />}
             {/* <CardSkeleton cards={datas.length} /> */}
             {datas &&
               datas.map((item: any, index: number) => {
-                return <Cards key={index} image={item.poster_path} title={item.title} release={item.release_date} detail={() => handlePopup(item.id)} favorite={() => addToFavoriteMovie(item.id)} />;
+                return <Cards key={index} id={item.id} image={item.poster_path} title={item.title} release={item.release_date} detail={() => handlePopup(item.id)} favorite={() => addToFavoriteMovie(item.id)} />;
               })}
           </div>
         </div>
@@ -230,7 +235,7 @@ const Home: FC<HomeProps> = ({ navigate }) => {
         </div>
 
         <div className="my-14 ">
-          <h1 className="text-3xl font-bold text-center mb-6">Genres</h1>
+          <h1 className={`text-3xl font-bold text-center mb-6 ${toggle ? "text-slate-100" : "text-slate-900"}`}>Genres</h1>
           <div className="w-3/4 mx-auto flex flex-wrap justify-center gap-3">
             {genres.map((item: any, index: number) => {
               return <GenreButton key={index} label={item.name} onclick={() => getMovieByGenre(item.id, 1)} />;
@@ -249,7 +254,7 @@ const Home: FC<HomeProps> = ({ navigate }) => {
             {isLoadingGenre && <CardSkeleton cards={movieByGenreLength} />}
             {movieByGenre &&
               movieByGenre.map((item: any, index: number) => {
-                return <Cards key={index} image={item.poster_path} title={item.title} release={item.release_date} detail={() => handlePopup(item.id)} favorite={() => addToFavoriteMovie(item.id)} />;
+                return <Cards key={index} id={item.id} image={item.poster_path} title={item.title} release={item.release_date} detail={() => handlePopup(item.id)} favorite={() => addToFavoriteMovie(item.id)} />;
               })}
           </div>
           {movieByGenreLength != 0 && (
@@ -258,7 +263,7 @@ const Home: FC<HomeProps> = ({ navigate }) => {
                 <Pagination prev={() => prevGenreHandle()} next={() => nextGenreHandle()} numPage={genrePage} totalPages={totalGenrePage} />
               </div>
               <div className="w-3/4 mx-auto p-3 mt-5">
-                <button onClick={() => getMovieByGenre(0, 1)} className="bg-slate-500 text-white rounded-md p-3">
+                <button onClick={() => getMovieByGenre(0, 1)} className={`rounded-md p-3 ${toggle ? "bg-slate-200 text-slate-900" : "bg-slate-500 text-white"}`}>
                   Clear
                 </button>
               </div>

@@ -17,6 +17,10 @@ export interface FavProps {
   navigate: any;
 }
 
+export interface PopProps {
+  navigate: any;
+}
+
 export interface HomeProps {
   navigate: any;
 }

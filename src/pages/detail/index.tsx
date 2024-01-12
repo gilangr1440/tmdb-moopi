@@ -3,6 +3,8 @@ import { withRouter } from "../../withRouter";
 import Layout from "../../components/Layout";
 import axios from "axios";
 import { DetailProps } from "../../utils/pages";
+import Swal from "sweetalert2";
+import { TabTitle } from "../../utils/functiontitle";
 
 type Movie = {
   adult?: boolean;
@@ -81,6 +83,7 @@ const Detail: FC<DetailProps> = ({ location, navigate }) => {
   });
   const [keywordSearch, setKeywordSearch] = useState<string>("");
   const accessToken = import.meta.env.VITE_ACCESS_TOKEN;
+  const userId = import.meta.env.VITE_USER_ID;
 
   function showSearchHandle() {
     setShowSearch(!showSearch);
@@ -112,10 +115,41 @@ const Detail: FC<DetailProps> = ({ location, navigate }) => {
       });
   }
 
+  function addToFavoriteMovie(id: number) {
+    axios
+      .post(
+        `account/${userId}/favorite`,
+        {
+          media_type: "movie",
+          media_id: id,
+          favorite: true,
+        },
+        {
+          headers: {
+            accept: "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response);
+        Swal.fire({
+          title: "Added",
+          text: "Success add favorite movie",
+          icon: "success",
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
   useEffect(() => {
     const id = location.state.id;
     getMovieDetail(id);
   }, []);
+
+  TabTitle(`Moopi | ${movieDetail.title}`);
 
   return (
     <Layout showSearch={() => showSearchHandle()} searchIcon={showSearch}>
@@ -178,6 +212,10 @@ const Detail: FC<DetailProps> = ({ location, navigate }) => {
               </div>
               <h1 className="text-white text-xl font-main">Overview</h1>
               <p className="text-white font-main">{movieDetail.overview}</p>
+
+              <button className="mt-4 mx-3 h-8 float-end bg-slate-500 hover:bg-yellow-500 text-white text-center font-bold p-2 rounded" onClick={() => addToFavoriteMovie(movieDetail.id)}>
+                Favorite
+              </button>
             </div>
           </div>
         </div>

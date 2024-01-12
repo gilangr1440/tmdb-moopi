@@ -3,9 +3,12 @@ import { FC, useEffect, useState } from "react";
 import Trailer from "./Trailer";
 import { Link } from "react-router-dom";
 import { ModalProps } from "../utils/component";
+import Swal from "sweetalert2";
 
 const Modal: FC<ModalProps> = ({ showModal, image, title, release, desc, id_props }) => {
   const [trailerDatas, setTrailerDatas] = useState<[]>([]);
+  const accessToken = import.meta.env.VITE_ACCESS_TOKEN;
+  const userId = import.meta.env.VITE_USER_ID;
 
   function getVideoMovie(id: number) {
     axios
@@ -19,6 +22,35 @@ const Modal: FC<ModalProps> = ({ showModal, image, title, release, desc, id_prop
       .then((response) => {
         const trailerDataResults = response.data.results;
         setTrailerDatas(trailerDataResults);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  function addToFavoriteMovie(id: number) {
+    axios
+      .post(
+        `account/${userId}/favorite`,
+        {
+          media_type: "movie",
+          media_id: id,
+          favorite: true,
+        },
+        {
+          headers: {
+            accept: "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response);
+        Swal.fire({
+          title: "Added",
+          text: "Success add favorite movie",
+          icon: "success",
+        });
       })
       .catch((error) => {
         console.error(error);
@@ -54,7 +86,10 @@ const Modal: FC<ModalProps> = ({ showModal, image, title, release, desc, id_prop
               })}
           </div>
         </div>
-        <button className="mt-4 h-10 float-end bg-blue-500 hover:bg-blue-600 text-white text-center font-bold p-2 rounded" onClick={showModal}>
+        <button className="mt-4 mx-3 h-8 float-end bg-slate-500 hover:bg-slate-600 text-white text-center font-bold p-2 rounded" onClick={() => addToFavoriteMovie(id_props)}>
+          Favorite
+        </button>
+        <button className="mt-4 mx-3 h-8 float-end bg-slate-500 hover:bg-slate-600 text-white text-center font-bold p-2 rounded" onClick={showModal}>
           Close
         </button>
       </div>

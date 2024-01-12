@@ -1,17 +1,16 @@
 import React, { FC, FormEvent, useEffect, useState } from "react";
+import { withRouter } from "../../withRouter";
+import axios from "axios";
+import Swal from "sweetalert2";
 import Cards from "../../components/Cards";
+import CardSkeleton from "../../components/CardSkeleton";
 import Layout from "../../components/Layout";
 import Modal from "../../components/Modal";
 import Pagination from "../../components/Pagination";
-
-import axios from "axios";
-import CardSkeleton from "../../components/CardSkeleton";
-import Swal from "sweetalert2";
-import { withRouter } from "../../withRouter";
-import { FavProps, Movie } from "../../utils/pages";
+import { Movie, PopProps } from "../../utils/pages";
 import { TabTitle } from "../../utils/functiontitle";
 
-const Favorite: FC<FavProps> = ({ navigate }) => {
+const Popular: FC<PopProps> = ({ navigate }) => {
   const [visibility, setVisibility] = useState<boolean>(false);
   const [showSearch, setShowSearch] = useState<boolean>(false);
   const [idMovie, setIdMovie] = useState<number>(0);
@@ -22,12 +21,12 @@ const Favorite: FC<FavProps> = ({ navigate }) => {
     release_date: "",
     overview: "",
   });
-  const [favorites, setFavorites] = useState<never[]>([]);
-  const [favoriteSum, setFavoriteSum] = useState<number>(0);
+  const [popular, setPopular] = useState<never[]>([]);
+  const [popularSum, setPopularSum] = useState<number>(0);
   const [keywordSearch, setKeywordSearch] = useState<string>("");
-  const [favPage, setFavPage] = useState<number>(1);
-  const [totalFavPage, setTotalFavPage] = useState<number>(0);
-  const [isLoadingFav, setIsLoadingFav] = useState<boolean>(true);
+  const [popPage, setPopPage] = useState<number>(1);
+  const [totalPopPage, setTotalPopPage] = useState<number>(0);
+  const [isLoadingPop, setIsLoadingPop] = useState<boolean>(true);
   const accessToken = import.meta.env.VITE_ACCESS_TOKEN;
   const userId = import.meta.env.VITE_USER_ID;
 
@@ -54,23 +53,23 @@ const Favorite: FC<FavProps> = ({ navigate }) => {
     setShowSearch(!showSearch);
   }
 
-  function getFavoritesMovies(page: number) {
+  function getPopularMovies(page: number) {
     axios
-      .get(`account/${userId}/favorite/movies?language=en-US&page=${page}`, {
+      .get(`movie/popular?language=en-US&page=${page}`, {
         headers: {
           accept: "application/json",
           Authorization: `Bearer ${accessToken}`,
         },
       })
       .then((response) => {
-        setIsLoadingFav(true);
-        setFavorites([]);
+        setIsLoadingPop(true);
+        setPopular([]);
         const { results, total_pages } = response.data;
-        setFavoriteSum(results.length);
-        setTotalFavPage(total_pages);
+        setPopularSum(results.length);
+        setTotalPopPage(total_pages);
         setTimeout(() => {
-          setFavorites(results);
-          setIsLoadingFav(false);
+          setPopular(results);
+          setIsLoadingPop(false);
         }, 3000);
       })
       .catch((error) => {
@@ -87,14 +86,14 @@ const Favorite: FC<FavProps> = ({ navigate }) => {
     });
   };
 
-  function removeFavoriteMovie(id_movie: number) {
+  function addToFavoriteMovie(id_movie: number) {
     axios
       .post(
         `account/${userId}/favorite`,
         {
           media_type: "movie",
           media_id: id_movie,
-          favorite: false,
+          favorite: true,
         },
         {
           headers: {
@@ -105,15 +104,10 @@ const Favorite: FC<FavProps> = ({ navigate }) => {
       )
       .then((response) => {
         console.log(response);
-        setFavorites([]);
-        setIsLoadingFav(true);
-        setTimeout(() => {
-          getFavoritesMovies(favPage);
-        }, 500);
         Swal.fire({
-          title: "Removed",
-          text: "Success remove favorite movie",
-          icon: "warning",
+          title: "Added",
+          text: "Success add favorite movie",
+          icon: "success",
         });
       })
       .catch((error) => {
@@ -122,18 +116,18 @@ const Favorite: FC<FavProps> = ({ navigate }) => {
   }
 
   useEffect(() => {
-    getFavoritesMovies(favPage);
-  }, [favPage]);
+    getPopularMovies(popPage);
+  }, [popPage]);
 
-  function nextFavHandle() {
-    setFavPage(favPage + 1);
+  function nextPopHandle() {
+    setPopPage(popPage + 1);
   }
 
-  function prevFavHandle() {
-    setFavPage(favPage - 1);
+  function prevPopHandle() {
+    setPopPage(popPage - 1);
   }
 
-  TabTitle("Moopi | Favorite");
+  TabTitle("Moopi | Popular");
 
   return (
     <div>
@@ -148,17 +142,17 @@ const Favorite: FC<FavProps> = ({ navigate }) => {
           <></>
         )}
         <div className="my-14">
-          <h1 className="text-3xl font-bold text-center mb-6">Favorites Movies</h1>
+          <h1 className="text-3xl font-bold text-center mb-6">Popular Movies</h1>
           <div className="w-3/4 mx-auto grid grid-cols-5 gap-4">
-            {isLoadingFav && <CardSkeleton cards={favoriteSum} />}
-            {favorites &&
-              favorites.map((item: any, index: number) => {
-                return <Cards key={index} id={item.id} image={item.poster_path} title={item.title} release={item.release_date} detail={() => handlePopup(item.id)} remove={() => removeFavoriteMovie(item.id)} />;
+            {isLoadingPop && <CardSkeleton cards={popularSum} />}
+            {popular &&
+              popular.map((item: any, index: number) => {
+                return <Cards key={index} id={item.id} image={item.poster_path} title={item.title} release={item.release_date} detail={() => handlePopup(item.id)} favorite={() => addToFavoriteMovie(item.id)} />;
               })}
           </div>
         </div>
         <div className="flex justify-center my-8">
-          <Pagination prev={() => prevFavHandle()} next={() => nextFavHandle()} numPage={favPage} totalPages={totalFavPage} />
+          <Pagination prev={() => prevPopHandle()} next={() => nextPopHandle()} numPage={popPage} totalPages={totalPopPage} />
         </div>
         {visibility ? (
           movieDetail.id == idMovie ? (
@@ -174,4 +168,4 @@ const Favorite: FC<FavProps> = ({ navigate }) => {
   );
 };
 
-export default withRouter(Favorite);
+export default withRouter(Popular);

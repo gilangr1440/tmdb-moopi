@@ -8,6 +8,7 @@ import Modal from "../../components/Modal";
 import Swal from "sweetalert2";
 import Pagination from "../../components/Pagination";
 import { Movie, SearchProps } from "../../utils/pages";
+import { TabTitle } from "../../utils/functiontitle";
 
 const Search: FC<SearchProps> = ({ location, navigate }) => {
   const [visibility, setVisibility] = useState<boolean>(false);
@@ -136,6 +137,7 @@ const Search: FC<SearchProps> = ({ location, navigate }) => {
   }
 
   const keyword = location.state.keywordSearch;
+  TabTitle(`Moopi | Search Result "${keyword}"`);
 
   return (
     <div>
@@ -159,7 +161,7 @@ const Search: FC<SearchProps> = ({ location, navigate }) => {
                     {isLoadingSearch && <CardSkeleton cards={searchSum} />}
                     {!isLoadingSearch &&
                       datasSearch.map((item: any, index: number) => {
-                        return <Cards key={index} image={item.poster_path} title={item.title} release={item.release_date} detail={() => handlePopup(item.id)} favorite={() => addToFavoriteMovie(item.id)} />;
+                        return <Cards key={index} id={item.id} image={item.poster_path} title={item.title} release={item.release_date} detail={() => handlePopup(item.id)} favorite={() => addToFavoriteMovie(item.id)} />;
                       })}
                   </div>
                 </div>

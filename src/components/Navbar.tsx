@@ -1,8 +1,15 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { Link } from "react-router-dom";
 import { NavbarProps } from "../utils/component";
+import { useModeContext } from "../context/modeContext";
 
 const Navbar: FC<NavbarProps> = ({ search, icon }) => {
+  const { handleToggle, toggle } = useModeContext();
+  const [showNotif, setShowNotif] = useState<boolean>(false);
+
+  function showNotifHandle() {
+    setShowNotif(!showNotif);
+  }
   return (
     <div>
       <div className="flex justify-around items-center h-16 w-full font-main text-white bg-slate-500">
@@ -33,7 +40,18 @@ const Navbar: FC<NavbarProps> = ({ search, icon }) => {
           </ul>
         </div>
         <div className="flex gap-6 items-center">
-          <i className="bx bxs-bell hover:text-yellow-300"></i>
+          <button onClick={() => handleToggle()}>{toggle ? <i className="bx bxs-sun hover:text-yellow-300"></i> : <i className="bx bxs-moon hover:text-yellow-300"></i>}</button>
+          <i onClick={() => showNotifHandle()} className="bx bxs-bell hover:text-yellow-300"></i>
+          {showNotif ? (
+            <div className="w-52 h-28 z-50 bg-white rounded-md absolute right-[100px] top-14 p-4">
+              <h1 className="text-md font-bold text-black">
+                Unread Notifications: <span className="text-slate-700">0</span>
+              </h1>
+            </div>
+          ) : (
+            <></>
+          )}
+
           <img src="src/assets/avatar.jpg" className="rounded-full" width={40} alt="profile" />
         </div>
       </div>

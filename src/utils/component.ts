@@ -1,6 +1,7 @@
 import React from "react";
 
 export interface CardProps {
+  id: number;
   image: string;
   title: string;
   release: string;
