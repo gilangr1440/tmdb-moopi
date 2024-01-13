@@ -136,7 +136,7 @@ const Favorite: FC<FavProps> = ({ navigate }) => {
   TabTitle("Moopi | Favorite");
 
   return (
-    <div>
+    <div className="dark:bg-slate-700">
       <Layout showSearch={() => showSearchHandle()} searchIcon={showSearch}>
         {showSearch ? (
           <form onSubmit={searchMovies} className="w-full absolute z-10 gap-5 flex justify-center items-center bg-white h-10">
@@ -148,7 +148,7 @@ const Favorite: FC<FavProps> = ({ navigate }) => {
           <></>
         )}
         <div className="my-14">
-          <h1 className="text-3xl font-bold text-center mb-6">Favorites Movies</h1>
+          <h1 className="text-3xl font-bold text-center mb-6 dark:text-white">Favorites Movies</h1>
           <div className="w-3/4 mx-auto grid grid-cols-5 gap-4">
             {isLoadingFav && <CardSkeleton cards={favoriteSum} />}
             {favorites &&

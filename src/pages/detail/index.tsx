@@ -171,7 +171,7 @@ const Detail: FC<DetailProps> = ({ location, navigate }) => {
             <div className="w-72 overflow-hidden rounded-lg">
               <img src={`https://image.tmdb.org/t/p/original/${movieDetail.poster_path}`} className="w-full h-full object-cover" />
             </div>
-            <div className="w-[70%]">
+            <div className="w-[70%] backdrop-blur-md p-3 rounded-lg">
               <h1 className="text-white text-4xl font-bold font-main">{movieDetail.title}</h1>
               <ul className="flex gap-2 text-white font-main mb-5">
                 {movieDetail.genres.map((items: any, index: number) => {

@@ -1,15 +1,44 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { NavbarProps } from "../utils/component";
-import { useModeContext } from "../context/modeContext";
 
 const Navbar: FC<NavbarProps> = ({ search, icon }) => {
-  const { handleToggle, toggle } = useModeContext();
   const [showNotif, setShowNotif] = useState<boolean>(false);
+  const [showDropdown, setShowDropdown] = useState<boolean>(false);
+  const [theme, setTheme] = useState<string>(localStorage.getItem("theme") ? localStorage.getItem("theme") : "light");
 
-  function showNotifHandle() {
-    setShowNotif(!showNotif);
-  }
+  const iconNotif = useRef();
+  const notifRef = useRef();
+
+  const imgRef = useRef();
+  const menuRef = useRef();
+
+  useEffect(() => {
+    if (theme == "dark") {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+  }, [theme]);
+
+  const handleThemeSwitch = () => {
+    setTheme(theme == "dark" ? "light" : "dark");
+  };
+
+  window.addEventListener("click", (e) => {
+    if (e.target !== menuRef.current && e.target !== imgRef.current) {
+      setShowDropdown(false);
+    }
+  });
+
+  window.addEventListener("click", (e) => {
+    if (e.target !== notifRef.current && e.target !== iconNotif.current) {
+      setShowNotif(false);
+    }
+  });
+
   return (
     <div>
       <div className="flex justify-around items-center h-16 w-full font-main text-white bg-slate-500">
@@ -40,10 +69,10 @@ const Navbar: FC<NavbarProps> = ({ search, icon }) => {
           </ul>
         </div>
         <div className="flex gap-6 items-center">
-          <button onClick={() => handleToggle()}>{toggle ? <i className="bx bxs-sun hover:text-yellow-300"></i> : <i className="bx bxs-moon hover:text-yellow-300"></i>}</button>
-          <i onClick={() => showNotifHandle()} className="bx bxs-bell hover:text-yellow-300"></i>
+          <button onClick={handleThemeSwitch}>{theme == "dark" ? <i className="bx bxs-moon hover:text-yellow-300"></i> : <i className="bx bxs-sun hover:text-yellow-300"></i>}</button>
+          <i ref={iconNotif} onClick={() => setShowNotif(!showNotif)} className="bx bxs-bell hover:text-yellow-300 cursor-pointer"></i>
           {showNotif ? (
-            <div className="w-52 h-28 z-50 bg-white rounded-md absolute right-[100px] top-14 p-4">
+            <div ref={notifRef} className="w-52 h-28 z-50 bg-white rounded-md absolute right-[100px] top-14 p-4">
               <h1 className="text-md font-bold text-black">
                 Unread Notifications: <span className="text-slate-700">0</span>
               </h1>
@@ -52,7 +81,21 @@ const Navbar: FC<NavbarProps> = ({ search, icon }) => {
             <></>
           )}
 
-          <img src="src/assets/avatar.jpg" className="rounded-full" width={40} alt="profile" />
+          <img ref={imgRef} onClick={() => setShowDropdown(!showDropdown)} src="src/assets/avatar.jpg" className="rounded-full cursor-pointer" width={40} alt="profile" />
+          {showDropdown ? (
+            <div ref={menuRef} className="w-52 h-28 z-50 bg-white rounded-md absolute right-[45px] top-14 p-4">
+              <ul className="text-black text-center">
+                <li onClick={() => setShowDropdown(!showDropdown)} className="p-3 hover:bg-gray-300 cursor-pointer">
+                  <a href="#">Profil</a>
+                </li>
+                <li onClick={() => setShowDropdown(!showDropdown)} className="p-3 hover:bg-red-600 hover:text-white cursor-pointer">
+                  <a href="#">Logout</a>
+                </li>
+              </ul>
+            </div>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
     </div>

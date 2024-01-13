@@ -140,7 +140,7 @@ const Search: FC<SearchProps> = ({ location, navigate }) => {
   TabTitle(`Moopi | Search Result "${keyword}"`);
 
   return (
-    <div>
+    <div className="dark:bg-slate-700">
       <Layout showSearch={() => showSearchHandle()} searchIcon={showSearch}>
         {showSearch ? (
           <form onSubmit={searchMovies} className="w-full absolute z-10 gap-5 flex justify-center items-center bg-white h-10">
@@ -156,7 +156,7 @@ const Search: FC<SearchProps> = ({ location, navigate }) => {
             return (
               <>
                 <div className="my-14">
-                  <h1 className="text-3xl font-bold text-center mb-6">Search Results "{keyword}"</h1>
+                  <h1 className="text-3xl font-bold text-center mb-6 dark:text-white">Search Results "{keyword}"</h1>
                   <div className="w-3/4 mx-auto grid grid-cols-5 gap-4">
                     {isLoadingSearch && <CardSkeleton cards={searchSum} />}
                     {!isLoadingSearch &&
@@ -174,9 +174,9 @@ const Search: FC<SearchProps> = ({ location, navigate }) => {
             return (
               <>
                 <div className="my-14">
-                  <h1 className="text-3xl font-bold text-center mb-6">Search Results "{keyword}"</h1>
+                  <h1 className="text-3xl font-bold text-center mb-6 dark:text-white">Search Results "{keyword}"</h1>
                   <div className="w-3/4 mx-auto grid grid-cols-5 gap-4">
-                    <h1>Loading...</h1>
+                    <h1 className="dark:text-white">Loading...</h1>
                   </div>
                 </div>
               </>
@@ -185,9 +185,9 @@ const Search: FC<SearchProps> = ({ location, navigate }) => {
             return (
               <>
                 <div className="my-14">
-                  <h1 className="text-3xl font-bold text-center mb-6">Search Results "{keyword}"</h1>
+                  <h1 className="text-3xl font-bold text-center mb-6 dark:text-white">Search Results "{keyword}"</h1>
                   <div className="w-3/4 mx-auto grid grid-cols-5 gap-4">
-                    <h1>Movie Not Found</h1>
+                    <h1 className="dark:text-white">Movie Not Found</h1>
                   </div>
                 </div>
               </>
