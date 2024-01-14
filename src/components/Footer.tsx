@@ -1,7 +1,5 @@
 import "/node_modules/flag-icons/css/flag-icons.min.css";
 
-import React from "react";
-
 const Footer = () => {
   return (
     <div>

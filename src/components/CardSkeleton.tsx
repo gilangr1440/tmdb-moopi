@@ -3,7 +3,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
 import "react-loading-skeleton/dist/skeleton.css";
 
-import React, { FC } from "react";
+import { FC } from "react";
 import { SkeletonProps } from "../utils/component";
 
 const CardSkeleton: FC<SkeletonProps> = ({ cards }) => {

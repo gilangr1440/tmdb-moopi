@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import { PaginationProps } from "../utils/component";
 
 const Pagination: FC<PaginationProps> = ({ next, prev, numPage, totalPages }) => {

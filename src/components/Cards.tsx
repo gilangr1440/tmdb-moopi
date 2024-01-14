@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import { CardProps } from "../utils/component";
 import { Link } from "react-router-dom";
 

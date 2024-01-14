@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import { TrailerProps } from "../utils/component";
 
 const Trailer: FC<TrailerProps> = ({ id_video }) => {

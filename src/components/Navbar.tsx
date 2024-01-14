@@ -1,11 +1,11 @@
-import React, { FC, useEffect, useRef, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { NavbarProps } from "../utils/component";
 
 const Navbar: FC<NavbarProps> = ({ search, icon }) => {
   const [showNotif, setShowNotif] = useState<boolean>(false);
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
-  const [theme, setTheme] = useState<string>(localStorage.getItem("theme") ? localStorage.getItem("theme") : "light");
+  const [theme, setTheme] = useState<string | any>(localStorage.getItem("theme") ? localStorage.getItem("theme") : "light");
 
   const iconNotif = useRef();
   const notifRef = useRef();

@@ -1,4 +1,4 @@
-import React, { FC, FormEvent, useEffect, useState } from "react";
+import { FC, FormEvent, useEffect, useState } from "react";
 import Cards from "../../components/Cards";
 import Layout from "../../components/Layout";
 import Modal from "../../components/Modal";

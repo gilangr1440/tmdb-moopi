@@ -1,4 +1,4 @@
-import React, { FC, FormEvent, useEffect, useState } from "react";
+import { FC, FormEvent, useEffect, useState } from "react";
 import { withRouter } from "../../withRouter";
 import Layout from "../../components/Layout";
 import axios from "axios";
