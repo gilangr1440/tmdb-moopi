@@ -7,11 +7,11 @@ const Navbar: FC<NavbarProps> = ({ search, icon }) => {
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
   const [theme, setTheme] = useState<string | any>(localStorage.getItem("theme") ? localStorage.getItem("theme") : "light");
 
-  const iconNotif = useRef();
-  const notifRef = useRef();
+  const iconNotif = useRef<HTMLImageElement>(null);
+  const notifRef = useRef<HTMLImageElement>(null);
 
-  const imgRef = useRef();
-  const menuRef = useRef();
+  const imgRef = useRef<HTMLImageElement>(null);
+  const menuRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
     if (theme == "dark") {

@@ -4,7 +4,33 @@ import Layout from "../../components/Layout";
 import axios from "axios";
 import { DetailProps } from "../../utils/pages";
 import Swal from "sweetalert2";
-import { TabTitle } from "../../utils/functiontitle";
+
+interface GenresType {
+  id: number;
+  name: string;
+}
+
+interface CompaniesType {
+  id: number;
+  logo_path: string;
+  name: string;
+  origin_country: string;
+}
+
+interface CastsType {
+  adult: boolean;
+  gender: number;
+  id: number;
+  known_for_department: string;
+  name: string;
+  original_name: string;
+  popularity: number;
+  profile_path: string;
+  cast_id: number;
+  character: string;
+  credit_id: string;
+  order: number;
+}
 
 type Movie = {
   adult?: boolean;
@@ -17,24 +43,24 @@ type Movie = {
   };
   budget?: number;
   credits?: {
-    cast?: never[] | string[];
+    cast?: CastsType[] | never[];
     crew?: never[];
   };
-  genres?: never[] | string[];
+  genres?: GenresType[] | never[];
   homepage?: string;
-  id?: number;
+  id?: number | any;
   imdb_id?: string;
   original_language?: string;
   original_title?: string;
   overview?: string;
   popularity?: number;
   poster_path?: string;
-  production_companies?: never[] | string[];
-  production_countries?: never[] | string[];
+  production_companies?: CompaniesType[] | never[];
+  production_countries?: never[];
   release_date?: string;
   revenue?: number;
   runtime?: number;
-  spoken_languages?: never[] | string[];
+  spoken_languages?: never[];
   status?: string;
   tagline?: string;
   title?: string;
@@ -45,6 +71,7 @@ type Movie = {
 
 const Detail: FC<DetailProps> = ({ location, navigate }) => {
   const [showSearch, setShowSearch] = useState<boolean>(false);
+  // const [movieDetail, setMovieDetail] = useState<Movie>({});
   const [movieDetail, setMovieDetail] = useState<Movie>({
     adult: false,
     backdrop_path: "",
@@ -56,10 +83,10 @@ const Detail: FC<DetailProps> = ({ location, navigate }) => {
     },
     budget: 0,
     credits: {
-      cast: ["nothing"],
+      cast: [],
       crew: [],
     },
-    genres: ["nothing"],
+    genres: [],
     homepage: "",
     id: 0,
     imdb_id: "",
@@ -68,12 +95,12 @@ const Detail: FC<DetailProps> = ({ location, navigate }) => {
     overview: "",
     popularity: 0,
     poster_path: "",
-    production_companies: ["nothing"],
-    production_countries: ["nothing"],
+    production_companies: [],
+    production_countries: [],
     release_date: "",
     revenue: 0,
     runtime: 0,
-    spoken_languages: ["nothing"],
+    spoken_languages: [],
     status: "",
     tagline: "",
     title: "",
@@ -81,6 +108,36 @@ const Detail: FC<DetailProps> = ({ location, navigate }) => {
     vote_average: 0,
     vote_count: 0,
   });
+  const [genres, setGenres] = useState<GenresType[]>([
+    {
+      id: 0,
+      name: "",
+    },
+  ]);
+  const [companies, setCompanies] = useState<CompaniesType[]>([
+    {
+      id: 0,
+      logo_path: "",
+      name: "",
+      origin_country: "",
+    },
+  ]);
+  const [casts, setCasts] = useState<CastsType[]>([
+    {
+      adult: false,
+      gender: 0,
+      id: 0,
+      known_for_department: "",
+      name: "",
+      original_name: "",
+      popularity: 0,
+      profile_path: "",
+      cast_id: 0,
+      character: "",
+      credit_id: "",
+      order: 0,
+    },
+  ]);
   const [keywordSearch, setKeywordSearch] = useState<string>("");
   const accessToken = import.meta.env.VITE_ACCESS_TOKEN;
   const userId = import.meta.env.VITE_USER_ID;
@@ -109,6 +166,9 @@ const Detail: FC<DetailProps> = ({ location, navigate }) => {
       .then((response) => {
         const detailResult = response.data;
         setMovieDetail(detailResult);
+        setGenres(response.data.genres);
+        setCompanies(response.data.production_companies);
+        setCasts(response.data.credits.cast);
       })
       .catch((error) => {
         console.error(error);
@@ -149,6 +209,10 @@ const Detail: FC<DetailProps> = ({ location, navigate }) => {
     getMovieDetail(id);
   }, []);
 
+  const TabTitle = (newTitle: any) => {
+    return (document.title = newTitle);
+  };
+
   TabTitle(`Moopi | ${movieDetail.title}`);
 
   return (
@@ -174,14 +238,14 @@ const Detail: FC<DetailProps> = ({ location, navigate }) => {
             <div className="w-[70%] backdrop-blur-md p-3 rounded-lg">
               <h1 className="text-white text-4xl font-bold font-main">{movieDetail.title}</h1>
               <ul className="flex gap-2 text-white font-main mb-5">
-                {movieDetail.genres.map((items: any, index: number) => {
+                {genres.map((items: any, index: number) => {
                   return <li key={index}>{items.name}</li>;
                 })}
               </ul>
               <div className="flex gap-3 items-center">
                 <h1 className="text-white font-main">Production company:</h1>
                 <ul className="flex gap-2 text-white font-main">
-                  {movieDetail.production_companies.slice(0, 3).map((items: any, index: number) => {
+                  {companies.slice(0, 3).map((items: any, index: number) => {
                     return <li key={index}>{items.name}</li>;
                   })}
                 </ul>
@@ -201,7 +265,7 @@ const Detail: FC<DetailProps> = ({ location, navigate }) => {
               <div className="flex gap-3 items-center">
                 <h1 className="text-white font-main">Casts:</h1>
                 <ul className="flex gap-2 text-white font-main">
-                  {movieDetail.credits.cast.slice(0, 5).map((items: any, index: number) => {
+                  {casts.slice(0, 5).map((items: any, index: number) => {
                     return <li key={index}>{items.name}</li>;
                   })}
                 </ul>

@@ -12,7 +12,6 @@ import Swal from "sweetalert2";
 import GenreButton from "../../components/GenreButton";
 import { withRouter } from "../../withRouter";
 import { HomeProps, Movie } from "../../utils/pages";
-import { TabTitle } from "../../utils/functiontitle";
 
 const Home: FC<HomeProps> = ({ navigate }) => {
   const [visibility, setVisibility] = useState<boolean>(false);
@@ -107,7 +106,6 @@ const Home: FC<HomeProps> = ({ navigate }) => {
       })
       .then((response) => {
         const { genres } = response.data;
-        console.log(genres);
         setGenres(genres);
       })
       .catch((error) => {
@@ -197,6 +195,10 @@ const Home: FC<HomeProps> = ({ navigate }) => {
   function prevGenreHandle() {
     setGenrePage(genrePage - 1);
   }
+
+  const TabTitle = (newTitle: any) => {
+    return (document.title = newTitle);
+  };
 
   TabTitle("Moopi | Home");
 

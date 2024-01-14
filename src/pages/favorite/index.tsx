@@ -9,7 +9,6 @@ import CardSkeleton from "../../components/CardSkeleton";
 import Swal from "sweetalert2";
 import { withRouter } from "../../withRouter";
 import { FavProps, Movie } from "../../utils/pages";
-import { TabTitle } from "../../utils/functiontitle";
 
 const Favorite: FC<FavProps> = ({ navigate }) => {
   const [visibility, setVisibility] = useState<boolean>(false);
@@ -132,6 +131,10 @@ const Favorite: FC<FavProps> = ({ navigate }) => {
   function prevFavHandle() {
     setFavPage(favPage - 1);
   }
+
+  const TabTitle = (newTitle: any) => {
+    return (document.title = newTitle);
+  };
 
   TabTitle("Moopi | Favorite");
 

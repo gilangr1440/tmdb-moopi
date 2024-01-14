@@ -8,7 +8,6 @@ import Layout from "../../components/Layout";
 import Modal from "../../components/Modal";
 import Pagination from "../../components/Pagination";
 import { Movie, PopProps } from "../../utils/pages";
-import { TabTitle } from "../../utils/functiontitle";
 
 const Popular: FC<PopProps> = ({ navigate }) => {
   const [visibility, setVisibility] = useState<boolean>(false);
@@ -126,6 +125,10 @@ const Popular: FC<PopProps> = ({ navigate }) => {
   function prevPopHandle() {
     setPopPage(popPage - 1);
   }
+
+  const TabTitle = (newTitle: any) => {
+    return (document.title = newTitle);
+  };
 
   TabTitle("Moopi | Popular");
 

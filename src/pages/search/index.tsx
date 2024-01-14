@@ -8,7 +8,6 @@ import Modal from "../../components/Modal";
 import Swal from "sweetalert2";
 import Pagination from "../../components/Pagination";
 import { Movie, SearchProps } from "../../utils/pages";
-import { TabTitle } from "../../utils/functiontitle";
 
 const Search: FC<SearchProps> = ({ location, navigate }) => {
   const [visibility, setVisibility] = useState<boolean>(false);
@@ -135,6 +134,10 @@ const Search: FC<SearchProps> = ({ location, navigate }) => {
   function prevSearchHandle() {
     setSearchPage(searchPage - 1);
   }
+
+  const TabTitle = (newTitle: any) => {
+    return (document.title = newTitle);
+  };
 
   const keyword = location.state.keywordSearch;
   TabTitle(`Moopi | Search Result "${keyword}"`);
