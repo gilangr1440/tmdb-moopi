@@ -81,7 +81,9 @@ const Navbar: FC<NavbarProps> = ({ search, icon }) => {
             <></>
           )}
 
-          <img ref={imgRef} onClick={() => setShowDropdown(!showDropdown)} src="src/assets/avatar.jpg" className="rounded-full cursor-pointer" width={40} alt="profile" />
+          <div className="rounded-full w-10 h-10">
+            <img ref={imgRef} onClick={() => setShowDropdown(!showDropdown)} src="https://source.unsplash.com/random?avatar" className="object-cover rounded-[inherit] w-full h-full cursor-pointer" alt="profile" />
+          </div>
           {showDropdown ? (
             <div ref={menuRef} className="w-52 h-28 z-50 bg-white rounded-md absolute right-[45px] top-14 p-4">
               <ul className="text-black text-center">
