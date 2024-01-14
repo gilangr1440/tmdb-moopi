@@ -1,5 +1,3 @@
-import React from "react";
-
 export interface DetailProps {
   location: any;
   navigate: any;

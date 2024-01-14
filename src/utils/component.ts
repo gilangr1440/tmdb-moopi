@@ -27,11 +27,11 @@ export interface LayoutProps {
 
 export interface ModalProps {
   showModal: () => void;
-  image: string;
-  title: string;
-  release: string;
-  desc: string;
-  id_props: number;
+  image: string | any;
+  title: string | any;
+  release: string | any;
+  desc: string | any;
+  id_props: number | any;
 }
 
 export interface NavbarProps {

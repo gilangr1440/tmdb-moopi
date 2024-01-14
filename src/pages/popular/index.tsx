@@ -13,7 +13,7 @@ import { TabTitle } from "../../utils/functiontitle";
 const Popular: FC<PopProps> = ({ navigate }) => {
   const [visibility, setVisibility] = useState<boolean>(false);
   const [showSearch, setShowSearch] = useState<boolean>(false);
-  const [idMovie, setIdMovie] = useState<number>(0);
+  const [idMovie, setIdMovie] = useState<number | any>(0);
   const [movieDetail, setMovieDetail] = useState<Movie>({
     id: 0,
     poster_path: "",

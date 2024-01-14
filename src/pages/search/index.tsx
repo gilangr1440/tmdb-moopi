@@ -13,7 +13,7 @@ import { TabTitle } from "../../utils/functiontitle";
 const Search: FC<SearchProps> = ({ location, navigate }) => {
   const [visibility, setVisibility] = useState<boolean>(false);
   const [showSearch, setShowSearch] = useState<boolean>(false);
-  const [idMovie, setIdMovie] = useState<number>(0);
+  const [idMovie, setIdMovie] = useState<number | any>(0);
   const [movieDetail, setMovieDetail] = useState<Movie>({
     id: 0,
     poster_path: "",
@@ -25,7 +25,7 @@ const Search: FC<SearchProps> = ({ location, navigate }) => {
   const [searchSum, setSearchSum] = useState<number>(0);
   const [totalSearchPage, setTotalSearchPage] = useState<number>(0);
   const [searchPage, setSearchPage] = useState<number>(1);
-  const [datasSearch, setDatasSearch] = useState<never[]>([]);
+  const [datasSearch, setDatasSearch] = useState<never[] | number[]>([]);
   const [keywordSearch, setKeywordSearch] = useState<string>("");
   const accessToken = import.meta.env.VITE_ACCESS_TOKEN;
   const userId = import.meta.env.VITE_USER_ID;

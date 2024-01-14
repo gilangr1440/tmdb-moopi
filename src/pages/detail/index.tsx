@@ -17,10 +17,10 @@ type Movie = {
   };
   budget?: number;
   credits?: {
-    cast?: never[];
+    cast?: never[] | string[];
     crew?: never[];
   };
-  genres?: never[];
+  genres?: never[] | string[];
   homepage?: string;
   id?: number;
   imdb_id?: string;
@@ -29,12 +29,12 @@ type Movie = {
   overview?: string;
   popularity?: number;
   poster_path?: string;
-  production_companies?: never[];
-  production_countries?: never[];
+  production_companies?: never[] | string[];
+  production_countries?: never[] | string[];
   release_date?: string;
   revenue?: number;
   runtime?: number;
-  spoken_languages?: never[];
+  spoken_languages?: never[] | string[];
   status?: string;
   tagline?: string;
   title?: string;
@@ -56,10 +56,10 @@ const Detail: FC<DetailProps> = ({ location, navigate }) => {
     },
     budget: 0,
     credits: {
-      cast: [],
+      cast: ["nothing"],
       crew: [],
     },
-    genres: [],
+    genres: ["nothing"],
     homepage: "",
     id: 0,
     imdb_id: "",
@@ -68,12 +68,12 @@ const Detail: FC<DetailProps> = ({ location, navigate }) => {
     overview: "",
     popularity: 0,
     poster_path: "",
-    production_companies: [],
-    production_countries: [],
+    production_companies: ["nothing"],
+    production_countries: ["nothing"],
     release_date: "",
     revenue: 0,
     runtime: 0,
-    spoken_languages: [],
+    spoken_languages: ["nothing"],
     status: "",
     tagline: "",
     title: "",
