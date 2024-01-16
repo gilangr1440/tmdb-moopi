@@ -72,7 +72,7 @@ const Footer = () => {
             <ul className="footer-link-list">
               <li className="!mb-5 font-bold">GET THE APP</li>
               <li>
-                <img src="..\assets\app-store.png" width={130} alt="app-store" />
+                <img src="src\assets\app-store.png" width={130} alt="app-store" />
               </li>
             </ul>
           </div>
